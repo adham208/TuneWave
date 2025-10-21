@@ -11,8 +11,8 @@
       fx:controller="com.TuneWave.PlayerController">
 
 
+    <Label fx:id="songLabel"/>
     <Button text="Play" onAction="#onPlayButtonClick"/>
     <Button fx:id="browser" text="Browse Song" onAction="#browseSong"/>
-
-    <Slider fx:id="VolumeSlider"/>
+    <Slider fx:id="volumeSlider"/>
 </VBox>
