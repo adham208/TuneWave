@@ -14,5 +14,6 @@
     <Label fx:id="songLabel"/>
     <Button text="Play" onAction="#onPlayButtonClick"/>
     <Button fx:id="browser" text="Browse Song" onAction="#browseSong"/>
+    <Label fx:id="length" />
     <Slider fx:id="volumeSlider"/>
 </VBox>

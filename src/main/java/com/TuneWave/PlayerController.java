@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class PlayerController {
+    public Label length;
     @FXML
     private Button browser;
     @FXML
@@ -64,12 +65,14 @@ public class PlayerController {
             try{
                 player = new MediaPlayer(new Media(uri));
                 player.setVolume(volumeSlider.getValue()/100.0);
+                player.setOnReady(()->
+                        length.setText(Double.toString(player.getTotalDuration().toMinutes())));
                 isPlaying = false;
                 onPlayButtonClick();
+
             } catch (Exception e){
                 songLabel.setText("Error Loading File");
             }
-
 
 
         }

@@ -15,8 +15,6 @@ public class TuneWaveApp extends Application {
         stage.setTitle("Tune Wave");
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
