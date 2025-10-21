@@ -3,6 +3,6 @@ module com.example.mediaplayer {
     requires javafx.fxml;
     requires javafx.media;
 
-    opens com.example.mediaplayer to javafx.fxml;
-    exports com.example.mediaplayer;
+    opens com.TuneWave to javafx.fxml;
+    exports com.TuneWave;
 }
