@@ -14,6 +14,8 @@ import java.io.File;
 
 public class PlayerController {
     public Label length;
+    public Button playButton;
+    public Label currlength;
     @FXML
     private Button browser;
     @FXML
@@ -42,10 +44,12 @@ public class PlayerController {
     protected void onPlayButtonClick() {
         if(isPlaying){
             player.pause();
+            playButton.setText("▶");
             isPlaying = false;
             return;
         }
         player.play();
+        playButton.setText("⏸");
         isPlaying = true;
     }
 
@@ -68,6 +72,7 @@ public class PlayerController {
                 player.setVolume(volumeSlider.getValue()/100.0);
                 player.setOnReady(()->
                         length.setText(TimeUtils.dateToStringReady(player.getTotalDuration())));
+                player.currentTimeProperty().addListener((obs,oldVal,newVal)->currlength.setText(TimeUtils.dateToStringReady(newVal)));
                 isPlaying = false;
                 onPlayButtonClick();
 

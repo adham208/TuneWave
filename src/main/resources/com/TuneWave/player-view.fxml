@@ -12,8 +12,9 @@
 
 
     <Label fx:id="songLabel"/>
-    <Button text="Play" onAction="#onPlayButtonClick"/>
+    <Button fx:id="playButton" text="▶" onAction="#onPlayButtonClick"/>
     <Button fx:id="browser" text="Browse Song" onAction="#browseSong"/>
+    <Label  fx:id="currlength" />
     <Label fx:id="length" />
     <Slider fx:id="volumeSlider"/>
 </VBox>
