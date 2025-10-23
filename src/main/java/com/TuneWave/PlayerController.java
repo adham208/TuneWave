@@ -16,6 +16,7 @@ public class PlayerController {
     public Label length;
     public Button playButton;
     public Label currlength;
+    public Slider seekSlider;
     @FXML
     private Button browser;
     @FXML

@@ -16,5 +16,7 @@
     <Button fx:id="browser" text="Browse Song" onAction="#browseSong"/>
     <Label  fx:id="currlength" />
     <Label fx:id="length" />
+    <Slider fx:id="seekSlider" />
+
     <Slider fx:id="volumeSlider"/>
 </VBox>
