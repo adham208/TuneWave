@@ -1,6 +1,7 @@
 package com.TuneWave;
 
 import com.TuneWave.Utils.FileUtils;
+import com.TuneWave.Utils.TimeUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,9 +67,10 @@ public class PlayerController {
                 player = new MediaPlayer(new Media(uri));
                 player.setVolume(volumeSlider.getValue()/100.0);
                 player.setOnReady(()->
-                        length.setText(Double.toString(player.getTotalDuration().toMinutes())));
+                        length.setText(TimeUtils.dateToStringReady(player.getTotalDuration())));
                 isPlaying = false;
                 onPlayButtonClick();
+
 
             } catch (Exception e){
                 songLabel.setText("Error Loading File");
