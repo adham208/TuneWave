@@ -31,7 +31,7 @@ public class PlayerController {
         songLabel.setText("No Song Selected");
         volumeSlider.setMin(0);
         volumeSlider.setMax(100);
-
+        volumeSlider.setMaxWidth(100);
         volumeSlider.setValue(50);
 
         volumeSlider.valueProperty().addListener(
@@ -71,9 +71,17 @@ public class PlayerController {
             try{
                 player = new MediaPlayer(new Media(uri));
                 player.setVolume(volumeSlider.getValue()/100.0);
-                player.setOnReady(()->
-                        length.setText(TimeUtils.dateToStringReady(player.getTotalDuration())));
+                player.setOnReady(()->{
+                    length.setText(TimeUtils.dateToStringReady(player.getTotalDuration()));
+                    seekSlider.setMax(player.getTotalDuration().toSeconds());
+                }
+                );
+
                 player.currentTimeProperty().addListener((obs,oldVal,newVal)->currlength.setText(TimeUtils.dateToStringReady(newVal)));
+                seekSlider.setMin(0);
+                player.currentTimeProperty().addListener((observableValue, duration, t1) ->
+                        seekSlider.setValue(t1.toSeconds()));
+
                 isPlaying = false;
                 onPlayButtonClick();
 
