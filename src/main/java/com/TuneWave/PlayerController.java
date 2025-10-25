@@ -90,8 +90,8 @@ public class PlayerController {
                 player.currentTimeProperty().addListener((obs,oldVal,newVal)->currLength.setText(TimeUtils.dateToStringReady(newVal)));
                 seekSlider.setMin(0);
                 player.currentTimeProperty().addListener((observableValue, duration, t1) ->{
-                    if(!isSeeking) {
-                        seekSlider.setValue(t1.toSeconds());
+                    if(!isSeeking){
+                    seekSlider.setValue(t1.toSeconds());
                     }
                 });
 

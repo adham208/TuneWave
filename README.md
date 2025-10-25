@@ -26,3 +26,5 @@ No idea I'm just playing around with Java it'll probably be a thing as long as i
 
 - ### Version 0.4 (Some Cooler Stuff)
     Now we've got a dynamic timestamp that shows "the current playback time" ain't that cool ?
+- ### Version 0.5
+    In this version we made a breakthrough now we can use the seek bar.
