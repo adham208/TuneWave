@@ -9,13 +9,15 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 
 public class PlayerController {
     public Label length;
     public Button playButton;
-    public Label currlength;
+    public Label currLength;
+    public boolean isSeeking;
     public Slider seekSlider;
     @FXML
     private Button browser;
@@ -37,6 +39,14 @@ public class PlayerController {
         volumeSlider.valueProperty().addListener(
                 (obs,oldVal,newVal)->
                         player.setVolume(newVal.doubleValue()/100.0));
+        seekSlider.setOnMousePressed(event -> {
+            isSeeking = true;
+        });
+
+        seekSlider.setOnMouseReleased(event->{
+            player.seek(Duration.seconds(seekSlider.getValue()));
+            isSeeking = false;
+        });
 
 
     }
@@ -77,10 +87,14 @@ public class PlayerController {
                 }
                 );
 
-                player.currentTimeProperty().addListener((obs,oldVal,newVal)->currlength.setText(TimeUtils.dateToStringReady(newVal)));
+                player.currentTimeProperty().addListener((obs,oldVal,newVal)->currLength.setText(TimeUtils.dateToStringReady(newVal)));
                 seekSlider.setMin(0);
-                player.currentTimeProperty().addListener((observableValue, duration, t1) ->
-                        seekSlider.setValue(t1.toSeconds()));
+                player.currentTimeProperty().addListener((observableValue, duration, t1) ->{
+                    if(!isSeeking) {
+                        seekSlider.setValue(t1.toSeconds());
+                    }
+                });
+
 
                 isPlaying = false;
                 onPlayButtonClick();
