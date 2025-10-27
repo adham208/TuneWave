@@ -25,7 +25,7 @@ public class PlayerController {
     private Slider volumeSlider;
     @FXML
     private Label songLabel;
-    protected MediaPlayer player = new MediaPlayer(new Media("file:///C:/Users/Adham/Downloads/Morning.mp3"));
+    protected MediaPlayer player;
     protected boolean isPlaying;
 
     @FXML
@@ -53,39 +53,56 @@ public class PlayerController {
 
     @FXML
     protected void onPlayButtonClick() {
-        if(isPlaying){
-            player.pause();
-            playButton.setText("▶");
-            isPlaying = false;
-            return;
+        if(player == null)
+        {
+            songLabel.setText("Choose a song first ffs!");
         }
-        player.play();
-        playButton.setText("⏸");
-        isPlaying = true;
+        else {
+            if (isPlaying) {
+                player.pause();
+                playButton.setText("▶");
+                isPlaying = false;
+                return;
+            }
+            player.play();
+            playButton.setText("⏸");
+            isPlaying = true;
+        }
     }
 
-
-
-    @FXML
-    protected void browseSong(){
+    private File chooseAudioFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("choose a song");
         fileChooser.setInitialDirectory(new File("F://Downloads"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Audio Files","*.mp3"));
-        File choosenFile = fileChooser.showOpenDialog(browser.getScene().getWindow());
-        if(choosenFile != null){
-            String uri = FileUtils.fileToURI(choosenFile);
-            player.dispose();
-            songLabel.setText(choosenFile.getName());
+        return fileChooser.showOpenDialog(browser.getScene().getWindow());
+    }
 
-            try{
-                player = new MediaPlayer(new Media(uri));
-                player.setVolume(volumeSlider.getValue()/100.0);
-                player.setOnReady(()->{
-                    length.setText(TimeUtils.dateToStringReady(player.getTotalDuration()));
-                    seekSlider.setMax(player.getTotalDuration().toSeconds());
+    private MediaPlayer createMediaPlayer(File file){
+        if(player != null)
+        {
+            if(player.getStatus() != MediaPlayer.Status.DISPOSED){
+                player.stop();
+                player.dispose();
+            }
+        }
+        MediaPlayer newPlayer = new MediaPlayer(new Media(FileUtils.fileToURI(file)));
+        newPlayer.setVolume(volumeSlider.getValue()/100.0);
+        newPlayer.setOnReady(()->{
+                    length.setText(TimeUtils.dateToStringReady(newPlayer.getTotalDuration()));
+                    seekSlider.setMax(newPlayer.getTotalDuration().toSeconds());
                 }
-                );
+        );
+        return newPlayer;
+    }
+
+    @FXML
+    protected void browseSong(){
+        File choosenFile = chooseAudioFile();
+        if(choosenFile != null){
+            songLabel.setText(choosenFile.getName());
+            player = createMediaPlayer(choosenFile);
+
 
                 player.currentTimeProperty().addListener((obs,oldVal,newVal)->currLength.setText(TimeUtils.dateToStringReady(newVal)));
                 seekSlider.setMin(0);
@@ -100,9 +117,6 @@ public class PlayerController {
                 onPlayButtonClick();
 
 
-            } catch (Exception e){
-                songLabel.setText("Error Loading File");
-            }
 
 
         }
